@@ -1,0 +1,57 @@
+@startuml
+left to right direction
+
+' 定义参与者
+actor Student as S
+actor CanteenStaff as CS
+actor Administrator as A
+
+' 定义对象
+object "饭卡管理系统" as FMS
+
+' 学生相关操作协作流程
+S -> FMS: 请求查询饭卡余额
+FMS -> S: 返回饭卡余额
+
+S -> FMS: 请求充值饭卡
+FMS -> A: 通知管理员处理充值请求
+A -> FMS: 完成充值操作
+FMS -> S: 告知充值成功
+
+S -> FMS: 请求挂失饭卡
+FMS -> A: 通知管理员处理挂失请求
+A -> FMS: 完成挂失操作
+FMS -> S: 告知挂失成功
+
+S -> FMS: 请求解挂饭卡
+FMS -> A: 通知管理员处理解挂请求
+A -> FMS: 完成解挂操作
+FMS -> S: 告知解挂成功
+
+S -> FMS: 请求补办饭卡
+FMS -> A: 通知管理员处理补办请求
+A -> FMS: 完成补办操作
+FMS -> S: 告知补办成功
+
+' 食堂工作人员相关操作协作流程
+CS -> FMS: 请求查询消费记录
+FMS -> CS: 返回消费记录
+
+CS -> FMS: 执行消费扣款操作
+FMS -> S: 通知学生消费扣款情况
+S -> FMS: 确认消费扣款
+
+' 管理员相关操作协作流程
+A -> FMS: 设置消费限额
+FMS -> A: 确认设置成功
+
+A -> FMS: 管理饭卡基本信息
+FMS -> A: 确认管理操作完成
+
+A -> FMS: 管理饭卡账户状态
+FMS -> A: 确认管理操作完成
+
+A -> FMS: 导入/导出饭卡数据
+FMS -> A: 确认导入/导出操作完成
+
+@enduml

@@ -1,0 +1,50 @@
+@startuml
+left to right direction
+
+' 定义参与者
+actor Student as S
+actor CanteenStaff as CS
+actor Administrator as A
+
+' 定义用例
+usecase "充值饭卡" as UC1
+usecase "查询饭卡余额" as UC2
+usecase "消费扣款" as UC3
+usecase "挂失饭卡" as UC4
+usecase "解挂饭卡" as UC5
+usecase "补办饭卡" as UC6
+usecase "设置消费限额" as UC7
+usecase "查看消费记录" as UC8
+usecase "管理饭卡基本信息" as UC9
+usecase "管理饭卡账户状态" as UC10
+usecase "导入/导出饭卡数据" as UC11
+
+' 学生与用例的关系
+S --> UC1
+S --> UC2
+S --> UC3
+S --> UC4
+S --> UC5
+S --> UC6
+S --> UC8
+
+' 食堂工作人员与用例的关系
+CS --> UC3
+CS --> UC8
+
+' 管理员与用例的关系
+A --> UC1
+A --> UC2
+A --> UC4
+A --> UC5
+A --> UC6
+A --> UC7
+A --> UC9
+A --> UC10
+A --> UC11
+
+' 用例之间的关系示例
+UC1 <|-- UC12 ' 假设UC12是UC1的一种特殊充值方式（扩展关系）
+UC8 <.. UC13 ' 假设UC13是查看消费记录中的详细分类记录（包含关系）
+
+@enduml

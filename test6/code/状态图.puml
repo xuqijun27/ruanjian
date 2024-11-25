@@ -1,0 +1,43 @@
+@startuml
+[*] --> Uninitialized
+state Uninitialized {
+    [*] --> CardCreated : 创建饭卡
+}
+state CardCreated {
+    [*] --> CardActivated : 激活饭卡
+    [*] --> CardDeleted : 删除饭卡
+}
+state CardActivated {
+    [*] --> CardSuspended : 暂停使用
+    [*] --> CardReactivated : 重新激活
+    [*] --> CardExpired : 到期
+    [*] --> CardBalanceLow : 余额不足
+    [*] --> CardCharged : 充值
+    [*] --> CardUsed : 消费
+}
+state CardSuspended {
+    [*] --> CardReactivated : 重新激活
+    [*] --> CardDeleted : 删除饭卡
+}
+state CardReactivated {
+    [*] --> CardSuspended : 暂停使用
+    [*] --> CardExpired : 到期
+    [*] --> CardBalanceLow : 余额不足
+    [*] --> CardCharged : 充值
+    [*] --> CardUsed : 消费
+}
+state CardExpired {
+    [*] --> CardDeleted : 删除饭卡
+}
+state CardBalanceLow {
+    [*] --> CardCharged : 充值
+    [*] --> CardUsed : 消费
+}
+state CardCharged {
+    [*] --> CardUsed : 消费
+}
+state CardUsed {
+    [*] --> CardCharged : 充值
+    [*] --> CardBalanceLow : 余额不足
+}
+@enduml
