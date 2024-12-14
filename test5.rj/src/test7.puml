@@ -1,0 +1,29 @@
+@startuml
+
+actor 学生 as Student
+actor 管理员 as Admin
+
+rectangle 饭卡系统 {
+  (学生端) as StudentInterface
+  (管理员端) as AdminInterface
+  [饭卡管理服务] as CardService
+  [消费服务] as ConsumptionService
+  [充值服务] as RechargeService
+  [数据库] as Database
+
+  StudentInterface .> CardService : 使用
+  AdminInterface .> CardService : 管理
+  StudentInterface .> ConsumptionService : 消费
+  AdminInterface .> ConsumptionService : 查看消费记录
+  StudentInterface .> RechargeService : 充值
+  AdminInterface .> RechargeService : 查看充值记录
+
+  CardService .> Database : 持久化数据
+  ConsumptionService .> Database : 访问消费数据
+  RechargeService .> Database : 访问充值数据
+}
+
+Student --> StudentInterface : 登录
+Admin --> AdminInterface : 登录
+
+@enduml

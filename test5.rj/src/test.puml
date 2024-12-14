@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "学生" as Student
+actor "管理员" as Admin
+
+rectangle "学生饭卡管理系统" {
+    usecase "充值饭卡" as UC1
+    usecase "消费支付" as UC2
+    usecase "查询余额" as UC3
+    usecase "挂失饭卡" as UC4
+    usecase "解挂饭卡" as UC5
+    usecase "查看消费记录" as UC6
+    usecase "添加饭卡" as UC7
+    usecase "删除饭卡" as UC8
+    usecase "修改饭卡信息" as UC9
+
+    Student --> UC1
+    Student --> UC2
+    Student --> UC3
+    Student --> UC4
+    Student --> UC6
+    Admin --> UC7
+    Admin --> UC8
+    Admin --> UC9
+    Student --> UC5
+}
+@enduml

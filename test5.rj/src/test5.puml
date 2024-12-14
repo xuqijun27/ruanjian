@@ -1,0 +1,38 @@
+@startuml
+
+' 定义组件
+node "前端" as FrontEnd {
+  [登录页面] as LoginPage
+  [饭卡管理页面] as CardManagementPage
+  [消费记录页面] as ConsumptionRecordPage
+  [充值记录页面] as RechargeRecordPage
+}
+
+node "后端" as BackEnd {
+  [用户服务] as UserService
+  [饭卡服务] as CardService
+  [消费服务] as ConsumptionService
+  [充值服务] as RechargeService
+}
+
+database "数据库" as Database {
+  [管理员表] as AdminTable
+  [饭卡表] as CardTable
+  [消费表] as ConsumptionTable
+  [充值表] as RechargeTable
+  [学生表] as StudentTable
+  [终端设备表] as TerminalTable
+}
+
+' 定义组件之间的关系
+FrontEnd --> BackEnd : 调用API
+BackEnd --> Database : 访问数据
+
+' 定义数据库表之间的关系
+AdminTable --> CardTable : 管理
+CardTable --> ConsumptionTable : 产生
+CardTable --> RechargeTable : 产生
+ConsumptionTable --> StudentTable : 记录
+RechargeTable --> StudentTable : 记录
+
+@enduml

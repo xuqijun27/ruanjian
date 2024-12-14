@@ -1,0 +1,64 @@
+@startuml
+title 学生饭卡管理系统状态图
+
+[*] --> Unlogged
+state Unlogged {
+    [*] --> StudentLogin
+    [*] --> AdminLogin
+}
+
+state StudentLogin {
+    [*] --> LoggedAsStudent
+    state LoggedAsStudent {
+        [*] --> QueryBalance
+        [*] --> RechargeCard
+        [*] --> ConsumeCard
+        [*] --> LoseCard
+        [*] --> UnloseCard
+        QueryBalance --> LoggedAsStudent
+        RechargeCard --> LoggedAsStudent
+        ConsumeCard --> LoggedAsStudent
+        LoseCard --> LoggedAsStudent
+        UnloseCard --> LoggedAsStudent
+    }
+}
+
+state AdminLogin {
+    [*] --> LoggedAsAdmin
+    state LoggedAsAdmin {
+        [*] --> AddStudent
+        [*] --> RemoveStudent
+        [*] --> ModifyStudentInfo
+        [*] --> AddCard
+        [*] --> RemoveCard
+        [*] --> ModifyCardInfo
+        [*] --> ManageSystemSettings
+        AddStudent --> LoggedAsAdmin
+        RemoveStudent --> LoggedAsAdmin
+        ModifyStudentInfo --> LoggedAsAdmin
+        AddCard --> LoggedAsAdmin
+        RemoveCard --> LoggedAsAdmin
+        ModifyCardInfo --> LoggedAsAdmin
+        ManageSystemSettings --> LoggedAsAdmin
+    }
+}
+
+state Card {
+    [*] --> Normal
+    state Normal {
+        [*] --> Consume
+        [*] --> Recharge
+        Consume --> Normal
+        Recharge --> Normal
+    }
+    Normal --> Lost
+    Lost --> Found
+    Found --> Normal
+}
+
+Unlogged --> LoggedAsStudent : 学生登录成功
+Unlogged --> LoggedAsAdmin : 管理员登录成功
+LoggedAsStudent --> Unlogged : 学生退出登录
+LoggedAsAdmin --> Unlogged : 管理员退出登录
+
+@enduml

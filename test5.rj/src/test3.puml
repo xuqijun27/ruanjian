@@ -1,0 +1,54 @@
+@startuml
+package "StudentCardModule" {
+    class "StudentCard" {
+        - cardId : String
+        - balance : double
+        - isLost : boolean
+        + StudentCard(cardId : String, initialBalance : double)
+        + recharge(amount : double) : void
+        + consume(amount : double) : void
+        + getBalance() : double
+        + loseCard() : void
+        + unloseCard() : void
+    }
+}
+
+package "StudentModule" {
+    class "Student" {
+        - studentId : String
+        - studentName : String
+        - studentCard : StudentCard
+        + Student(studentId : String, studentName : String, cardId : String, initialBalance : double)
+        + getStudentId() : String
+        + getStudentName() : String
+        + getStudentCard() : StudentCard
+    }
+}
+
+package "CardManagementSystemModule" {
+    class "CardManagementSystem" {
+        - studentList : ArrayList<Student>
+        + CardManagementSystem()
+        + addStudent(student : Student) : void
+        + removeStudent(studentId : String) : void
+        + findStudent(studentId : String) : Student
+        + getAllStudents() : ArrayList<Student>
+    }
+}
+
+package "AdministratorModule" {
+    class "Administrator" {
+        - adminId : String
+        - adminName : String
+        + Administrator(adminId : String, adminName : String)
+        + getAdminId() : String
+        + getAdminName() : String
+        + operateCardManagementSystem(system : CardManagementSystem) : void
+    }
+}
+
+"StudentModule" --> "StudentCardModule"
+"CardManagementSystemModule" --> "StudentModule"
+"AdministratorModule" --> "CardManagementSystemModule"
+
+@enduml

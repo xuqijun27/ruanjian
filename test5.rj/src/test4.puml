@@ -1,0 +1,66 @@
+@startuml
+left to right direction
+
+package "Student Card Management System" {
+    component "Student Card Database" as db {
+        interface "IStudentDataAccess" {
+            + getStudentById(String studentId)
+            + getStudentCardById(String cardId)
+            + updateStudent(Student student)
+            + updateStudentCard(StudentCard card)
+        }
+    }
+
+    component "Card Reader" as reader {
+        interface "ICardRead" {
+            + readCardInfo() : CardInfo
+        }
+    }
+
+    component "Transaction Processor" as processor {
+        interface "ITransactionProcess" {
+            + processConsume(CardInfo cardInfo, double amount)
+            + processRecharge(CardInfo cardInfo, double amount)
+            + processCardLoss(CardInfo cardInfo)
+            + processCardUnloss(CardInfo cardInfo)
+        }
+    }
+
+    component "Student Interface" as student_interface {
+        interface "IStudentOperation" {
+            + checkBalance()
+            + viewTransactionHistory()
+            + loseMyCard()
+            + rechargeCard(double amount)
+        }
+    }
+
+    component "Administrator Interface" as admin_interface {
+        interface "IAdminOperation" {
+            + addStudent(Student student)
+            + removeStudent(String studentId)
+            + modifyStudentInfo(Student student)
+            + addStudentCard(StudentCard card)
+            + removeStudentCard(String cardId)
+            + modifyStudentCardInfo(StudentCard card)
+        }
+    }
+
+    component "System Controller" as controller {
+        interface "ISystemControl" {
+            + handleStudentRequest(IStudentOperation operation)
+            + handleAdminRequest(IAdminOperation operation)
+            + notifyTransactionResult(TransactionResult result)
+            + updateSystemStatus()
+        }
+    }
+
+    db..> reader : Provides data for card validation
+    reader..> processor : Sends card info for processing
+    processor..> controller : Reports transaction results
+    student_interface..> controller : Sends student requests
+    admin_interface..> controller : Sends admin requests
+    controller..> db : Requests data updates
+    controller..> processor : Initiates transactions
+}
+@enduml

@@ -1,0 +1,43 @@
+@startuml
+autonumber
+title 学生饭卡管理系统时序图
+
+actor Student as student
+actor Administrator as admin
+
+participant "Student Interface" as student_interface
+participant "System Controller" as system_controller
+participant "Transaction Processor" as transaction_processor
+participant "Student Card Database" as student_card_db
+
+participant "Administrator Interface" as admin_interface
+
+== 学生充值饭卡操作 ==
+student -> student_interface: 输入充值金额，点击充值按钮
+student_interface -> system_controller: 发送充值请求（包含饭卡卡号、充值金额）
+system_controller -> student_card_db: 查询饭卡余额（通过卡号）
+student_card_db -> system_controller: 返回当前余额
+system_controller -> transaction_processor: 发起充值操作（卡号、充值金额）
+transaction_processor -> student_card_db: 更新饭卡余额
+student_card_db -> transaction_processor: 返回更新结果
+transaction_processor -> system_controller: 反馈充值结果
+system_controller -> student_interface: 返回充值成功/失败信息
+student_interface -> student: 显示充值成功/失败提示
+
+== 学生查询余额操作 ==
+student -> student_interface: 点击查询余额按钮
+student_interface -> system_controller: 发送查询余额请求（包含饭卡卡号）
+system_controller -> student_card_db: 查询饭卡余额（通过卡号）
+student_card_db -> system_controller: 返回当前余额
+system_controller -> student_interface: 返回余额信息
+student_interface -> student: 显示余额数值
+
+== 管理员添加学生操作 ==
+admin -> admin_interface: 输入学生信息（学号、姓名等）及饭卡信息（卡号、初始余额等）
+admin_interface -> system_controller: 发送添加学生请求（包含学生及饭卡完整信息）
+system_controller -> student_card_db: 插入学生信息和饭卡信息
+student_card_db -> system_controller: 返回插入结果
+system_controller -> admin_interface: 返回添加成功/失败信息
+admin_interface -> admin: 显示添加成功/失败提示
+
+@enduml

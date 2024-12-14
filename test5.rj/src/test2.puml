@@ -1,0 +1,27 @@
+@startuml
+object "student1" as s1 {
+    - studentId = "2024001"
+    - studentName = "张三"
+    - studentCard = "card1"
+}
+
+object "studentCard1" as sc1 {
+    - cardId = "card1"
+    - balance = 100.0
+    - isLost = false
+}
+
+object "cardManagementSystem" as cms {
+    - studentList = ["s1"]
+}
+
+object "administrator1" as a1 {
+    - adminId = "admin001"
+    - adminName = "李四"
+}
+
+s1 --> sc1
+cms --> s1
+a1 --> cms
+
+@enduml
